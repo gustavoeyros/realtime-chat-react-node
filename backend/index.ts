@@ -2,7 +2,7 @@ import express from "express";
 import { createServer } from "http";
 import { Server } from "socket.io";
 
-const PORT = 3001;
+const PORT = 3005;
 
 const app = express();
 
@@ -20,4 +20,4 @@ io.on("connection", (socket) => {
   });
 });
 
-app.listen(PORT, () => console.log("Server running on port " + PORT));
+httpServer.listen(PORT, () => console.log("Server running on port " + PORT));
