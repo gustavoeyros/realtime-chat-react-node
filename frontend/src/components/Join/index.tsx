@@ -1,17 +1,17 @@
 import { useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import { io } from "socket.io-client";
+import io from "socket.io-client";
 
 const Join = () => {
   const navigate = useNavigate();
   const userRef = useRef<HTMLInputElement>(null);
 
-  const handleSubmit = async () => {
+  const handleSubmit = () => {
     const username = userRef.current?.value;
     if (!username?.trim()) {
       return;
     }
-    const socket = await io("http://localhost:3001");
+    const socket = io("http://localhost:3005");
     socket.emit("set_username", username);
 
     navigate(`/chat`);
