@@ -1,10 +1,14 @@
-import { useRef } from "react";
+import { useContext, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import io from "socket.io-client";
+import { ISocket } from "../../interfaces/join";
+import { SocketContext } from "../../store/socket-context";
 
 const Join = () => {
   const navigate = useNavigate();
   const userRef = useRef<HTMLInputElement>(null);
+
+  const { setSocket } = useContext(SocketContext) as ISocket;
 
   const handleSubmit = () => {
     const username = userRef.current?.value;
@@ -13,7 +17,7 @@ const Join = () => {
     }
     const socket = io("http://localhost:3005");
     socket.emit("set_username", username);
-
+    setSocket(socket);
     navigate(`/chat`);
   };
   return (

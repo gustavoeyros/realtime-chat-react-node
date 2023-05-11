@@ -14,9 +14,21 @@ const io = new Server(httpServer, {
 
 io.on("connection", (socket) => {
   console.log("Usuário conectado!", socket.id);
+
+  socket.on("disconnect", (reason) => {
+    console.log("Usuário desconectado!", socket.id, reason);
+  });
+
   socket.on("set_username", (username) => {
     socket.data.username = username;
-    console.log(socket.data.username);
+  });
+
+  socket.on("message", (text) => {
+    io.emit("received_message", {
+      text,
+      authorId: socket.id,
+      author: socket.data.username,
+    });
   });
 });
 
